@@ -1,0 +1,26 @@
+{
+    "name": "alxmsl/paymentninjaclient",
+    "description": "Powerful client for Payment.Ninja REAST API",
+    "keywords": ["payment", "ninja", "api", "rest", "payment.ninja"],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "alxmsl",
+            "email": "alexey.y.maslov@gmail.com"
+        }
+    ],
+    "support": {
+        "email": "alexey.y.maslov@gmail.com",
+        "issues": "https://github.com/alxmsl/PaymentNinjaClient/issues"
+    },
+    "autoload": {
+        "psr-4": {"alxmsl\\PaymentNinja\\": "source/"}
+    },
+    "require": {
+        "alxmsl/network": ">=1.1.0",
+        "alxmsl/cli": ">=2.0.1"
+    },
+    "require-dev":{
+        "phpunit/phpunit": "4.7.*"
+    }
+}
