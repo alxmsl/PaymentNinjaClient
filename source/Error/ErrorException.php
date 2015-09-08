@@ -15,35 +15,22 @@
  * limitations under the License.
  */
 
-namespace alxmsl\PaymentNinja\Response;
+namespace alxmsl\PaymentNinja\Error;
 
 use alxmsl\PaymentNinja\InitializationInterface;
+use Exception;
 
 /**
- * Class for simple responses from API
+ * Class for API errors
  * @author alxmsl
  */
-final class SuccessResponse implements InitializationInterface {
-    /**
-     * @var bool request processing result
-     */
-    private $success = false;
-
-    /**
-     * @return bool request processing result
-     */
-    public function isSuccess() {
-        return $this->success;
-    }
-
+final class ErrorException extends Exception implements InitializationInterface {
     /**
      * @inheritdoc
-     * @return SuccessResponse simple response instance
+     * @return ErrorException API error instance
      */
     public static function initializeByString($string) {
-        $Response        = json_decode($string);
-        $Result          = new SuccessResponse();
-        $Result->success = (bool) $Response->success;
-        return $Result;
+        $Response = json_decode($string);
+        return new ErrorException($Response->error->message, $Response->error->code);
     }
 }
