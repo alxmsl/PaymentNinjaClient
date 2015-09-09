@@ -98,4 +98,34 @@ final class AuthenticateResponse implements InitializationInterface {
         $Result->Recurring      = RecurringResponse::initializeByObject($Response->recurring);
         return $Result;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $format = <<<'EOD'
+process result
+    id:             %s
+    success:        %s
+    permanentToken: %s
+    card
+        four:       %s
+        mask:       %s
+        exp. month: %s
+        exp. year:  %s
+    recurring
+        frequency:  %s
+        endsAt:     %s
+EOD;
+        return sprintf($format
+            , $this->getId()
+            , $this->isSuccess() ? 'true' : 'false'
+            , $this->getPermanentToken()
+            , $this->getCard()->getLastFour()
+            , $this->getCard()->getMask()
+            , $this->getCard()->getExpirationMonth()
+            , $this->getCard()->getExpirationYear()
+            , $this->getRecurring()->getFrequency()
+            , $this->getRecurring()->getEndsAt());
+    }
 }

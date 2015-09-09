@@ -72,4 +72,27 @@ final class ProcessRecurringResponse implements InitializationInterface {
         $Result->Card    = CardResponse::initializeByObject($Response->card);
         return $Result;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $format = <<<'EOD'
+process result
+    id:             %s
+    success:        %s
+    card
+        four:       %s
+        mask:       %s
+        exp. month: %s
+        exp. year:  %s
+EOD;
+        return sprintf($format
+            , $this->getId()
+            , $this->isSuccess() ? 'true' : 'false'
+            , $this->getCard()->getLastFour()
+            , $this->getCard()->getMask()
+            , $this->getCard()->getExpirationMonth()
+            , $this->getCard()->getExpirationYear());
+    }
 }

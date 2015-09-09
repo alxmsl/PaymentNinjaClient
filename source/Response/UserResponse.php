@@ -46,4 +46,15 @@ final class UserResponse implements InitializationInterface {
         $Result->id = (string) $Response->id;
         return $Result;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $format = <<<'EOD'
+user's data
+    id: %s
+EOD;
+        return sprintf($format, $this->getId());
+    }
 }

@@ -27,7 +27,7 @@ final class TokenResponse implements InitializationInterface {
     /**
      * @var string temporary, 10-minutes card token
      */
-    private $token = '';
+    private $id = '';
 
     /**
      * @var int expiration timestamp
@@ -42,8 +42,8 @@ final class TokenResponse implements InitializationInterface {
     /**
      * @return string temporary, 10-minutes card token
      */
-    public function getToken() {
-        return $this->token;
+    public function getId() {
+        return $this->id;
     }
 
     /**
@@ -67,9 +67,32 @@ final class TokenResponse implements InitializationInterface {
     public static function initializeByString($string) {
         $Response          = json_decode($string);
         $Result            = new TokenResponse();
-        $Result->token     = (string) $Response->token;
+        $Result->id        = (string) $Response->id;
         $Result->expiresAt = strtotime($Response->expiresAt);
         $Result->Card      = CardResponse::initializeByObject($Response->card);
         return $Result;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $format = <<<'EOD'
+token's data
+    id:        %s
+    expiresAt: %s
+    card
+        four:       %s
+        mask:       %s
+        exp. month: %s
+        exp. year:  %s
+EOD;
+        return sprintf($format
+            , $this->getId()
+            , date('Y-m-d H:i:s', $this->getExpiresAt())
+            , $this->getCard()->getLastFour()
+            , $this->getCard()->getMask()
+            , $this->getCard()->getExpirationMonth()
+            , $this->getCard()->getExpirationYear());
     }
 }

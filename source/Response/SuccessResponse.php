@@ -46,4 +46,15 @@ final class SuccessResponse implements InitializationInterface {
         $Result->success = (bool) $Response->success;
         return $Result;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $format = <<<'EOD'
+response:
+    success: %s
+EOD;
+        return sprintf($format, $this->isSuccess() ? 'true' : 'false');
+    }
 }

@@ -38,7 +38,7 @@ final class RecurringResponse implements ObjectInitializedInterface {
     /**
      * @return int minimal number of days between recurring payments
      */
-    public function isFrequency() {
+    public function getFrequency() {
         return $this->frequency;
     }
 
