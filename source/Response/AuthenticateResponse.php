@@ -129,6 +129,6 @@ EOD;
             , $this->getCard()->getExpirationMonth()
             , $this->getCard()->getExpirationYear()
             , $this->getRecurring()->getFrequency()
-            , date(DateTime::ISO8601, $this->getRecurring()->getEndsAt()));
+            , gmdate(DateTime::ISO8601, $this->getRecurring()->getEndsAt()));
     }
 }

@@ -152,6 +152,6 @@ EOD;
             , $this->getAccessControlServer()->getParameters()->getPaymentAuthorizationRequest()
             , $this->getAccessControlServer()->getParameters()->getTermsUrl()
             , $this->getRecurring()->getFrequency()
-            , date(DateTime::ISO8601, $this->getRecurring()->getEndsAt()));
+            , gmdate(DateTime::ISO8601, $this->getRecurring()->getEndsAt()));
     }
 }

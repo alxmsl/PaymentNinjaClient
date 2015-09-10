@@ -91,7 +91,7 @@ token's data
 EOD;
         return sprintf($format
             , $this->getId()
-            , date(DateTime::ISO8601, $this->getExpiresAt())
+            , gmdate(DateTime::ISO8601, $this->getExpiresAt())
             , $this->getCard()->getLastFour()
             , $this->getCard()->getMask()
             , $this->getCard()->getType()
