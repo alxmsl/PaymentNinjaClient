@@ -150,6 +150,7 @@ final class Client {
     /**
      * REST API method card/process implementation
      * @param string $userId user's identifier
+     * @param string $cardToken credit card token (temporary or permanent)
      * @param string $orderId merchant's order ID that will be returned back in a callback
      * @param float $price price in real currency
      * @param string $currency currency code as ISO 4217
@@ -170,12 +171,13 @@ final class Client {
      * @return Request card/process request instance
      * @throws ErrorException if there is an API error
      */
-    public function cardProcess($userId, $orderId, $price, $currency, $description, $ip, $acsReturnUrl,
+    public function cardProcess($userId, $cardToken, $orderId, $price, $currency, $description, $ip, $acsReturnUrl,
                                 $remember = null, $verifyCard = null, $recurring = null, $recurringInterval = null,
                                 $recurringTrial = null, array $attributes = []) {
 
         $parameters = [
             'user'           => (string) $userId,
+            'card_token'     => (string) $cardToken,
             'order_id'       => (string) $orderId,
             'price'          => (float) $price,
             'currency'       => (string) $currency,

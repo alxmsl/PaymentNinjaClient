@@ -162,24 +162,26 @@ final class ClientTest extends PHPUnit_Framework_TestCase {
     public function testCardProcess() {
         $Client = new Client(111, 222);
 
-        $Request = $Client->cardProcess('444', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs');
+        $Request = $Client->cardProcess('444', 'tkn', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs');
         $this->assertEquals([
             'project'        => '111',
             'user'           => '444',
+            'card_token'     => 'tkn',
             'order_id'       => '555',
             'price'          => 7.,
             'currency'       => 'RUB',
             'description'    => 'Lorem ipsum',
             'ip'             => '127.0.0.1',
             'acs_return_url' => 'http://alxmsl.ru/acs',
-            'signature'      => '9eb01e2246287d6796a0faada03296c4b1943509004ad9c6ce7665bb62d80050',
+            'signature'      => '5c98d9316b1dafac6d33ad0605101fe4b4c07fba6791e37772ead929e874573c',
         ], $this->getRequestParametersProperty($Request));
 
-        $Request = $Client->cardProcess('444', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
+        $Request = $Client->cardProcess('444', 'tkn', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
             , false);
         $this->assertEquals([
             'project'        => '111',
             'user'           => '444',
+            'card_token'     => 'tkn',
             'order_id'       => '555',
             'price'          => 7.,
             'currency'       => 'RUB',
@@ -187,14 +189,15 @@ final class ClientTest extends PHPUnit_Framework_TestCase {
             'ip'             => '127.0.0.1',
             'acs_return_url' => 'http://alxmsl.ru/acs',
             'remember'       => false,
-            'signature'      => '0dca14bc5f6d0b041c4497f04e5d138213e991a4c3f6633cdb2dc35452aeb092',
+            'signature'      => '23b76427e7880036d133a8df3f8eac5cd580650b1ab9458abc624f135685c21a',
         ], $this->getRequestParametersProperty($Request));
 
-        $Request = $Client->cardProcess('444', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
+        $Request = $Client->cardProcess('444', 'tkn', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
             , false, true);
         $this->assertEquals([
             'project'        => '111',
             'user'           => '444',
+            'card_token'     => 'tkn',
             'order_id'       => '555',
             'price'          => 7.,
             'currency'       => 'RUB',
@@ -203,14 +206,15 @@ final class ClientTest extends PHPUnit_Framework_TestCase {
             'acs_return_url' => 'http://alxmsl.ru/acs',
             'remember'       => false,
             'verify_card'    => true,
-            'signature'      => 'b2ec1fc3f85d784d31e9c584e8f7587beccf443c2eee74f6bae0f97fc3dd2250',
+            'signature'      => 'b5ee9c6c78c341cf33be6995e29c017a841ecee06aa81b56ef3231474419b13a',
         ], $this->getRequestParametersProperty($Request));
 
-        $Request = $Client->cardProcess('444', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
+        $Request = $Client->cardProcess('444', 'tkn', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
             , false, true, true);
         $this->assertEquals([
             'project'        => '111',
             'user'           => '444',
+            'card_token'     => 'tkn',
             'order_id'       => '555',
             'price'          => 7.,
             'currency'       => 'RUB',
@@ -220,14 +224,15 @@ final class ClientTest extends PHPUnit_Framework_TestCase {
             'remember'       => false,
             'verify_card'    => true,
             'recurring'      => true,
-            'signature'      => '03ba936e04d40a6d6312dc36ae5909e21b8cf56baabcb9b5076baab770e088fc',
+            'signature'      => 'c5b7613bcf1962a635ad924a2f02983ff9ba9310bdfe01caa4e22844ec29c701',
         ], $this->getRequestParametersProperty($Request));
 
-        $Request = $Client->cardProcess('444', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
+        $Request = $Client->cardProcess('444', 'tkn', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
             , false, true, true, 5);
         $this->assertEquals([
             'project'            => '111',
             'user'               => '444',
+            'card_token'     => 'tkn',
             'order_id'           => '555',
             'price'              => 7.,
             'currency'           => 'RUB',
@@ -238,14 +243,15 @@ final class ClientTest extends PHPUnit_Framework_TestCase {
             'verify_card'        => true,
             'recurring'          => true,
             'recurring_interval' => 5,
-            'signature'          => '82d7615ba945deaab1062c544429d41ef686122c95aff929e8665649efbd3f63',
+            'signature'          => 'eec09dfe0c2e937065fb5d4df8b65749ee6ca86efa311b0d9e378ef20b298b32',
         ], $this->getRequestParametersProperty($Request));
 
-        $Request = $Client->cardProcess('444', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
+        $Request = $Client->cardProcess('444', 'tkn', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
             , false, true, true, 5, 1);
         $this->assertEquals([
             'project'            => '111',
             'user'               => '444',
+            'card_token'     => 'tkn',
             'order_id'           => '555',
             'price'              => 7.,
             'currency'           => 'RUB',
@@ -257,10 +263,10 @@ final class ClientTest extends PHPUnit_Framework_TestCase {
             'recurring'          => true,
             'recurring_interval' => 5,
             'recurring_trial'    => 1,
-            'signature'          => '2c272b5941f1497bc67197a8ae5ed712658f42d98b8c96f14d728b89fcc1a4f7',
+            'signature'          => '86b3f52404f1ca93178575e1c95d413cc9d6b03eff642676fd234436e510dbd4',
         ], $this->getRequestParametersProperty($Request));
 
-        $Request = $Client->cardProcess('444', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
+        $Request = $Client->cardProcess('444', 'tkn', '555', 7, 'RUB', 'Lorem ipsum', '127.0.0.1', 'http://alxmsl.ru/acs'
             , false, true, true, 5, 1, [
                 'test1' => 'some_attr',
                 'test2' => 5,
@@ -268,6 +274,7 @@ final class ClientTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals([
             'project'            => '111',
             'user'               => '444',
+            'card_token'     => 'tkn',
             'order_id'           => '555',
             'price'              => 7.,
             'currency'           => 'RUB',
@@ -281,7 +288,7 @@ final class ClientTest extends PHPUnit_Framework_TestCase {
             'recurring_trial'    => 1,
             'attr_test1'         => 'some_attr',
             'attr_test2'         => 5,
-            'signature'          => '552c155a50219319f699bcd3c499da6f4dfe02beb1667dfab4e83a928e407c2d',
+            'signature'          => '5e53aba4507f2729764f7e72ffe5d68898e61b5bcb6f7cf2860188cd104f999c',
         ], $this->getRequestParametersProperty($Request));
     }
 
