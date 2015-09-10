@@ -31,9 +31,9 @@ final class RecurringResponse implements ObjectInitializedInterface {
     private $frequency = 0;
 
     /**
-     * @var string last date timestamp when recurring payments will work
+     * @var int last date timestamp when recurring payments will work
      */
-    private $endsAt = '';
+    private $endsAt = 0;
 
     /**
      * @return int minimal number of days between recurring payments
@@ -43,7 +43,7 @@ final class RecurringResponse implements ObjectInitializedInterface {
     }
 
     /**
-     * @return string last date timestamp when recurring payments will work
+     * @return int last date timestamp when recurring payments will work
      */
     public function getEndsAt() {
         return $this->endsAt;
