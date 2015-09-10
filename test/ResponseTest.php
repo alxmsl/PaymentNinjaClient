@@ -68,7 +68,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(2020, $Response->getCard()->getExpirationYear());
         $this->assertEquals('token\'s data
     id:        11fe4b4d430eccc4ca59b8df31bc5d161b4d54020082362a7d389486f5349066
-    expiresAt: 2015-05-22 11:21:37
+    expiresAt: 2015-05-22T11:21:37+0300
     card
         four:       4242
         mask:       ************4242
@@ -130,7 +130,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
             Terms:  http://example.com/return
     recurring
         frequency:  1
-        endsAt:     2015-10-22 11:49:23', (string) $Response);
+        endsAt:     2015-10-22T11:49:23+0300', (string) $Response);
     }
 
     public function testProcessRecurringResponse() {
@@ -195,7 +195,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
         exp. year:  2020
     recurring
         frequency:  1
-        endsAt:     2015-10-22 11:49:23', (string) $Response);
+        endsAt:     2015-10-22T11:49:23+0300', (string) $Response);
     }
 
 }

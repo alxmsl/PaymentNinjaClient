@@ -18,6 +18,7 @@
 namespace alxmsl\PaymentNinja\Response;
 
 use alxmsl\PaymentNinja\InitializationInterface;
+use DateTime;
 
 /**
  * Class for process results data
@@ -151,6 +152,6 @@ EOD;
             , $this->getAccessControlServer()->getParameters()->getPaymentAuthorizationRequest()
             , $this->getAccessControlServer()->getParameters()->getTermsUrl()
             , $this->getRecurring()->getFrequency()
-            , date('Y-m-d H:i:s', $this->getRecurring()->getEndsAt()));
+            , date(DateTime::ISO8601, $this->getRecurring()->getEndsAt()));
     }
 }

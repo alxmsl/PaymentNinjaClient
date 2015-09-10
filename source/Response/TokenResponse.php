@@ -18,6 +18,7 @@
 namespace alxmsl\PaymentNinja\Response;
 
 use alxmsl\PaymentNinja\InitializationInterface;
+use DateTime;
 
 /**
  * Class for card's token data
@@ -90,7 +91,7 @@ token's data
 EOD;
         return sprintf($format
             , $this->getId()
-            , date('Y-m-d H:i:s', $this->getExpiresAt())
+            , date(DateTime::ISO8601, $this->getExpiresAt())
             , $this->getCard()->getLastFour()
             , $this->getCard()->getMask()
             , $this->getCard()->getType()

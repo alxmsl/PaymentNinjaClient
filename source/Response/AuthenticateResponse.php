@@ -18,6 +18,7 @@
 namespace alxmsl\PaymentNinja\Response;
 
 use alxmsl\PaymentNinja\InitializationInterface;
+use DateTime;
 
 /**
  * Class for card's authentication data
@@ -128,6 +129,6 @@ EOD;
             , $this->getCard()->getExpirationMonth()
             , $this->getCard()->getExpirationYear()
             , $this->getRecurring()->getFrequency()
-            , date('Y-m-d H:i:s', $this->getRecurring()->getEndsAt()));
+            , date(DateTime::ISO8601, $this->getRecurring()->getEndsAt()));
     }
 }
