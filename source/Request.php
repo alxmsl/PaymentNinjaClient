@@ -76,9 +76,9 @@ final class Request {
     public function sign($publicKey, $privateKey) {
         if (!array_key_exists('signature', $this->parameters)) {
             $this->parameters = array_merge([
-                'project' => $publicKey,
+                'project' => (string) $publicKey,
             ], $this->parameters);
-            $this->parameters['signature'] = $this->signParameters($this->parameters, $privateKey);
+            $this->parameters['signature'] = $this->signParameters($this->parameters, (string) $privateKey);
         } else {
             throw new LogicException('parameters already signed');
         }
