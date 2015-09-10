@@ -20,7 +20,7 @@ namespace alxmsl\PaymentNinja\Response;
 use alxmsl\PaymentNinja\InitializationInterface;
 
 /**
- *
+ * Class for process recurring results data
  * @author alxmsl
  */
 final class ProcessRecurringResponse extends AbstractResponse implements InitializationInterface {
@@ -78,7 +78,7 @@ final class ProcessRecurringResponse extends AbstractResponse implements Initial
      */
     public function __toString() {
         $format = <<<'EOD'
-process result
+process recurring result
     id:             %s
     success:        %s
     card

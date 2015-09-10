@@ -128,7 +128,10 @@ process result
         exp. year:  %s
     acs
         url:        %s
-        parameters: %s
+        parameters
+            MD:     %s
+            PaReq:  %s
+            Terms:  %s
     recurring
         frequency:  %s
         endsAt:     %s
@@ -142,8 +145,10 @@ EOD;
             , $this->getCard()->getExpirationMonth()
             , $this->getCard()->getExpirationYear()
             , $this->getAccessControlServer()->getUrl()
-            , $this->getAccessControlServer()->getParameters()
+            , $this->getAccessControlServer()->getParameters()->getMerchantData()
+            , $this->getAccessControlServer()->getParameters()->getPaymentAuthorizationRequest()
+            , $this->getAccessControlServer()->getParameters()->getTermsUrl()
             , $this->getRecurring()->getFrequency()
-            , $this->getRecurring()->getEndsAt());
+            , date('Y-m-d H:i:s', $this->getRecurring()->getEndsAt()));
     }
 }

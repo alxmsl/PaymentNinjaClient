@@ -52,7 +52,7 @@ final class RecurringResponse implements ObjectInitializedInterface {
     public static function initializeByObject(stdClass $Object) {
         $Result            = new RecurringResponse();
         $Result->frequency = (int) $Object->frequency;
-        $Result->endsAt    = strtotime($Object->ends);
+        $Result->endsAt    = strtotime($Object->endsAt);
         return $Result;
     }
 }

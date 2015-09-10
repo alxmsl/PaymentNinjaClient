@@ -104,7 +104,7 @@ final class AuthenticateResponse extends AbstractResponse implements Initializat
      */
     public function __toString() {
         $format = <<<'EOD'
-process result
+authenticate result
     id:             %s
     success:        %s
     permanentToken: %s
@@ -126,6 +126,6 @@ EOD;
             , $this->getCard()->getExpirationMonth()
             , $this->getCard()->getExpirationYear()
             , $this->getRecurring()->getFrequency()
-            , $this->getRecurring()->getEndsAt());
+            , date('Y-m-d H:i:s', $this->getRecurring()->getEndsAt()));
     }
 }

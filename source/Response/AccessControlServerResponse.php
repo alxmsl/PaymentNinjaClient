@@ -31,9 +31,10 @@ final class AccessControlServerResponse implements ObjectInitializedInterface {
     private $url = '';
 
     /**
-     * @var string parameters that should be passed to secure3dUrl​as-is using the HTTP POST method
+     * @var AccessControlServerParametersResponse parameters that should be passed to secure3dUrl​as-is using the
+     *  HTTP POST method
      */
-    private $parameters = '';
+    private $parameters = null;
 
     /**
      * @return string URL where a user should be redirected with the secure3dParameters
@@ -43,7 +44,7 @@ final class AccessControlServerResponse implements ObjectInitializedInterface {
     }
 
     /**
-     * @return string parameters that should be passed to secure3dUrl​as-is using the HTTP POST method
+     * @return AccessControlServerParametersResponse parameters that should be passed to secure3dUrl​as-is using the HTTP POST method
      */
     public function getParameters() {
         return $this->parameters;
@@ -56,7 +57,7 @@ final class AccessControlServerResponse implements ObjectInitializedInterface {
     public static function initializeByObject(stdClass $Object) {
         $Result             = new AccessControlServerResponse();
         $Result->url        = (string) $Object->url;
-        $Result->parameters = (string) $Object->parameters;
+        $Result->parameters = AccessControlServerParametersResponse::initializeByObject($Object->parameters);
         return $Result;
     }
 }
