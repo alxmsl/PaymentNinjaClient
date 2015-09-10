@@ -55,6 +55,6 @@ final class SuccessResponse extends AbstractResponse implements InitializationIn
 response:
     success: %s
 EOD;
-        return sprintf($format, $this->isSuccess() ? 'true' : 'false');
+        return sprintf($format, json_encode($this->isSuccess()));
     }
 }

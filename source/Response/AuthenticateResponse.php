@@ -121,7 +121,7 @@ authenticate result
 EOD;
         return sprintf($format
             , $this->getId()
-            , $this->isSuccess() ? 'true' : 'false'
+            , json_encode($this->isSuccess())
             , $this->getPermanentToken()
             , $this->getCard()->getLastFour()
             , $this->getCard()->getMask()
