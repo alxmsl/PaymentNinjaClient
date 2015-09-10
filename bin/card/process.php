@@ -120,7 +120,8 @@ try {
 
     $Client   = new Client($publicKey, $privateKey);
     $Response = $Client->cardProcess($user, $orderId, $price, $currency, $description, $ip, $url, $remember, $verifyCard
-        , $recurring, $recurringInterval, $recurringTrial, $attributes);
+        , $recurring, $recurringInterval, $recurringTrial, $attributes)
+        ->execute();
     printf("%s\n", $Response);
 } catch (RequiredOptionException $Ex) {
     $Command->displayHelp();

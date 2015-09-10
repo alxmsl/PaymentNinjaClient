@@ -73,7 +73,7 @@ try {
     $Command->parse(true);
 
     $Client   = new Client($publicKey, $privateKey);
-    $Response = $Client->userResolve($user, $email, $ip, $displayName, $locale, $phone);
+    $Response = $Client->userResolve($user, $email, $ip, $displayName, $locale, $phone)->execute();
     printf("%s\n", $Response);
 } catch (RequiredOptionException $Ex) {
     $Command->displayHelp();

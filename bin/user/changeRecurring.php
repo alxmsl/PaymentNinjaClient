@@ -65,7 +65,7 @@ try {
     $Command->parse(true);
 
     $Client   = new Client($publicKey, $privateKey);
-    $Response = $Client->userChangeRecurring($user, $interval, $price, $currency);
+    $Response = $Client->userChangeRecurring($user, $interval, $price, $currency)->execute();
     printf("%s\n", $Response);
 } catch (RequiredOptionException $Ex) {
     $Command->displayHelp();

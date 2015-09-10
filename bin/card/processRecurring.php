@@ -74,7 +74,7 @@ try {
     $Command->parse(true);
 
     $Client   = new Client($publicKey, $privateKey);
-    $Response = $Client->cardProcessRecurring($user, $price, $currency, $orderId, $description);
+    $Response = $Client->cardProcessRecurring($user, $price, $currency, $orderId, $description)->execute();
     printf("%s\n", $Response);
 } catch (RequiredOptionException $Ex) {
     $Command->displayHelp();

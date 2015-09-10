@@ -23,7 +23,7 @@ use alxmsl\PaymentNinja\InitializationInterface;
  * Class for card's authentication data
  * @author alxmsl
  */
-final class AuthenticateResponse implements InitializationInterface {
+final class AuthenticateResponse extends AbstractResponse implements InitializationInterface {
     /**
      * @var string transaction identifier
      */

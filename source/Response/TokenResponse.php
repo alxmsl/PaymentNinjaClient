@@ -23,7 +23,7 @@ use alxmsl\PaymentNinja\InitializationInterface;
  * Class for card's token data
  * @author alxmsl
  */
-final class TokenResponse implements InitializationInterface {
+final class TokenResponse extends AbstractResponse implements InitializationInterface {
     /**
      * @var string temporary, 10-minutes card token
      */

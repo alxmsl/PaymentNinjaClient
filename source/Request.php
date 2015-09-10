@@ -17,7 +17,11 @@
 
 namespace alxmsl\PaymentNinja;
 
+use alxmsl\Network\Exception\HttpClientErrorCodeException;
 use alxmsl\Network\Http\Request as HttpRequest;
+use alxmsl\PaymentNinja\Error\ErrorException;
+use alxmsl\PaymentNinja\Response\AbstractResponse;
+use Closure;
 use LogicException;
 
 /**
@@ -41,6 +45,11 @@ final class Request {
     private $parameters = [];
 
     /**
+     * @var Closure|null response builder function
+     */
+    private $ResponseBuilder = null;
+
+    /**
      * @var array map that store relations between API and HTTP methods for requests
      */
     private static $methodMap = [
@@ -50,10 +59,12 @@ final class Request {
     /**
      * @param string $method API method name
      * @param array $parameters method call parameters
+     * @param Closure $ResponseBuilder
      */
-    public function __construct($method, array $parameters = []) {
-        $this->method     = (string) $method;
-        $this->parameters = $parameters;
+    public function __construct($method, array $parameters = [], Closure $ResponseBuilder) {
+        $this->method          = (string) $method;
+        $this->parameters      = $parameters;
+        $this->ResponseBuilder = $ResponseBuilder;
     }
 
     /**
@@ -75,7 +86,8 @@ final class Request {
 
     /**
      * Execute API method
-     * @return string raw API response
+     * @return AbstractResponse response instance
+     * @throws ErrorException if there is an API error
      */
     public function execute() {
         $Request = new HttpRequest();
@@ -101,7 +113,12 @@ final class Request {
                 $Request->setPostData($this->parameters);
                 break;
         }
-        return $Request->send();
+
+        try {
+            return $this->ResponseBuilder->__invoke($Request->send());
+        } catch (HttpClientErrorCodeException $Ex) {
+            throw ErrorException::initializeByString($Ex->getMessage());
+        }
     }
 
     /**

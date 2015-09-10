@@ -23,7 +23,7 @@ use alxmsl\PaymentNinja\InitializationInterface;
  * Class for resolved user data
  * @author alxmsl
  */
-final class UserResponse implements InitializationInterface {
+final class UserResponse extends AbstractResponse implements InitializationInterface {
     /**
      * @var string user identifier
      */

@@ -23,7 +23,7 @@ use alxmsl\PaymentNinja\InitializationInterface;
  *
  * @author alxmsl
  */
-final class ProcessRecurringResponse implements InitializationInterface {
+final class ProcessRecurringResponse extends AbstractResponse implements InitializationInterface {
     /**
      * @var string transaction identifier
      */

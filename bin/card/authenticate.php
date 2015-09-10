@@ -53,7 +53,7 @@ try {
     $Command->parse(true);
 
     $Client   = new Client($publicKey, $privateKey);
-    $Response = $Client->cardAuthenticate($payerResponse, $merchantData);
+    $Response = $Client->cardAuthenticate($payerResponse, $merchantData)->execute();
     printf("%s\n", $Response);
 } catch (RequiredOptionException $Ex) {
     $Command->displayHelp();

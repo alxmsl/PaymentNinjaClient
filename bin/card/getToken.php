@@ -68,7 +68,7 @@ try {
     $Command->parse(true);
 
     $Client   = new Client($publicKey, $privateKey);
-    $Response = $Client->cardGetToken($number, $expirationMonth, $expirationYear, $securityCode, $callback);
+    $Response = $Client->cardGetToken($number, $expirationMonth, $expirationYear, $securityCode, $callback)->execute();
     printf("%s\n", $Response);
 } catch (RequiredOptionException $Ex) {
     $Command->displayHelp();

@@ -17,7 +17,6 @@
 
 namespace alxmsl\PaymentNinja;
 
-use alxmsl\Network\Exception\HttpClientErrorCodeException;
 use alxmsl\PaymentNinja\Error\ErrorException;
 use alxmsl\PaymentNinja\Response\AuthenticateResponse;
 use alxmsl\PaymentNinja\Response\ProcessRecurringResponse;
@@ -58,7 +57,7 @@ final class Client {
      * @param null|string $displayName user's display name, if present
      * @param null|string $locale user's locale as ISO 639-1
      * @param null|string $phone user's phne number if present
-     * @return UserResponse resolved user instance
+     * @return Request user/resolved request instance
      * @throws ErrorException if there is an API error
      */
     public function userResolve($id, $email, $ip, $displayName = null, $locale = null, $phone = null) {
@@ -76,7 +75,9 @@ final class Client {
         if (!is_null($phone)) {
             $parameters['phone'] = (string) $phone;
         }
-        return UserResponse::initializeByString($this->call('user/resolve', $parameters));
+        return $this->getRequest('user/resolve', $parameters, function($string) {
+            return UserResponse::initializeByString($string);
+        });
     }
 
     /**
@@ -85,7 +86,7 @@ final class Client {
      * @param null|int $interval automatic recurring interval in days (if set 0, then only manual recurring will remain active)
      * @param null|float $price recurring price
      * @param null|int $currency recurring currency as ISO 4217
-     * @return SuccessResponse method response instance
+     * @return Request user/changeRecurring request instance
      * @throws ErrorException if there is an API error
      */
     public function userChangeRecurring($userId, $interval = null, $price = null, $currency = null) {
@@ -101,19 +102,23 @@ final class Client {
         if (!is_null($currency)) {
             $parameters['currency'] = (string) $currency;
         }
-        return SuccessResponse::initializeByString($this->call('user/changeRecurring', $parameters));
+        return $this->getRequest('user/changeRecurring', $parameters, function($string) {
+            return SuccessResponse::initializeByString($string);
+        });
     }
 
     /**
      * REST API method user/cancelRecurring implementation
      * @param string $userId user's identifier
-     * @return SuccessResponse method response instance
+     * @return Request user/cancelRecurring request instance
      * @throws ErrorException if there is an API error
      */
     public function userCancelRecurring($userId) {
-        return SuccessResponse::initializeByString($this->call('user/cancelRecurring', [
+        return $this->getRequest('user/cancelRecurring', [
             'user' => (string) $userId,
-        ]));
+        ], function($string) {
+            return SuccessResponse::initializeByString($string);
+        });
     }
 
     /**
@@ -123,7 +128,7 @@ final class Client {
      * @param int $expirationYear credit card's expiration year (4 digits)
      * @param string $securityCode credit card's security code: CVC, CVV2
      * @param null|string $callback callback function name for JSONP
-     * @return TokenResponse card's token instance
+     * @return Request card/getToken request instance
      * @throws ErrorException if there is an API error
      */
     public function cardGetToken($number, $expirationMonth, $expirationYear, $securityCode, $callback = null) {
@@ -136,7 +141,9 @@ final class Client {
         if (!is_null($callback)) {
             $parameters['callback'] = (string) $callback;
         }
-        return TokenResponse::initializeByString($this->call('card/getToken', $parameters));
+        return $this->getRequest('card/getToken', $parameters, function($string) {
+            return TokenResponse::initializeByString($string);
+        });
     }
 
     /**
@@ -159,7 +166,7 @@ final class Client {
      * @param null|int $recurringTrial Recurring trial period in days (first recurring payment will occur after trial).
      *  Recurring trial will work only if recurring interval is set
      * @param array $attributes custom attributes data
-     * @return ProcessResponse instance, that describes payment process result
+     * @return Request card/process request instance
      * @throws ErrorException if there is an API error
      */
     public function cardProcess($userId, $orderId, $price, $currency, $description, $ip, $acsReturnUrl,
@@ -193,21 +200,25 @@ final class Client {
         foreach ($attributes as $attributeName => $attributeValue) {
             $parameters[sprintf('attr_%s', $attributeName)] = $attributeValue;
         }
-        return ProcessResponse::initializeByString($this->call('card/process', $parameters));
+        return $this->getRequest('card/process', $parameters, function($string) {
+            return ProcessResponse::initializeByString($string);
+        });
     }
 
     /**
      * REST API method card/authenticate implementation
      * @param string $payerResponse payer authentication response. Returned from ACS to a​cs_return_url
      * @param string $merchantData merchant data. Returned from ACS to acs_return_url
-     * @return AuthenticateResponse instance, that describes card authentication data
+     * @return Request card/authenticate request instance
      * @throws ErrorException if there is an API error
      */
     public function cardAuthenticate($payerResponse, $merchantData) {
-        return AuthenticateResponse::initializeByString($this->call('card/authenticate', [
+        return $this->getRequest('card/authenticate', [
             'PaRes' => (string) $payerResponse,
             'MD'    => (string) $merchantData,
-        ]));
+        ], function($string) {
+            return AuthenticateResponse::initializeByString($string);
+        });
     }
 
     /**
@@ -217,7 +228,7 @@ final class Client {
      * @param string $currency currency code as ISO 4217
      * @param null|string $orderId merchant's order ID that will be returned back in a callback
      * @param null|string $description product description
-     * @return ProcessRecurringResponse instance, that describes payment recurring process result
+     * @return Request card/processRecurring request instance
      * @throws ErrorException if there is an API error
      */
     public function cardProcessRecurring($userId, $price, $currency, $orderId = null, $description = null) {
@@ -232,23 +243,20 @@ final class Client {
         if (!is_null($description)) {
             $parameters['description'] = (string) $description;
         }
-        return ProcessRecurringResponse::initializeByString($this->call('card/processRecurring', $parameters));
+        return $this->getRequest('card/processRecurring', $parameters, function($string) {
+            return ProcessRecurringResponse::initializeByString($string);
+        });
     }
 
     /**
-     * REST API call method
+     * Create request instance
      * @param string $method API method name
      * @param array $parameters method call parameters
-     * @return string raw API response
-     * @throws ErrorException exception if there was an API error
+     * @return Request request instance for API call
      */
-    private function call($method, $parameters) {
-        $Request = new Request($method, $parameters);
+    private function getRequest($method, $parameters, $responseBuilderClass) {
+        $Request = new Request($method, $parameters, $responseBuilderClass);
         $Request->sign($this->publicKey, $this->privateKey);
-        try {
-            return $Request->execute();
-        } catch (HttpClientErrorCodeException $Ex) {
-            throw ErrorException::initializeByString($Ex->getMessage());
-        }
+        return $Request;
     }
 }

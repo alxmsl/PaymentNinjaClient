@@ -23,7 +23,7 @@ use alxmsl\PaymentNinja\InitializationInterface;
  * Class for simple responses from API
  * @author alxmsl
  */
-final class SuccessResponse implements InitializationInterface {
+final class SuccessResponse extends AbstractResponse implements InitializationInterface {
     /**
      * @var bool request processing result
      */
