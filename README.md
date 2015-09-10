@@ -6,6 +6,7 @@
 [![Build Status](https://travis-ci.org/alxmsl/PaymentNinjaClient.svg)](https://travis-ci.org/alxmsl/PaymentNinjaClient)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alxmsl/PaymentNinjaClient/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alxmsl/PaymentNinjaClient/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/alxmsl/PaymentNinjaClient/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/alxmsl/PaymentNinjaClient/?branch=master)
+[![Dependency Status](https://www.versioneye.com/user/projects/55f1babad4d2040019000137/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55f1babad4d2040019000137)
 
 [![Total Downloads](https://poser.pugx.org/alxmsl/paymentninjaclient/downloads)](https://packagist.org/packages/alxmsl/paymentninjaclient)
 
