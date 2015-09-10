@@ -58,10 +58,10 @@ final class Request {
 
     /**
      * @param string $method API method name
-     * @param array $parameters method call parameters
      * @param Closure $ResponseBuilder
+     * @param array $parameters method call parameters
      */
-    public function __construct($method, array $parameters = [], Closure $ResponseBuilder) {
+    public function __construct($method, Closure $ResponseBuilder, array $parameters = []) {
         $this->method          = (string) $method;
         $this->parameters      = $parameters;
         $this->ResponseBuilder = $ResponseBuilder;
@@ -86,10 +86,24 @@ final class Request {
 
     /**
      * Execute API method
+     * @codeCoverageIgnore
      * @return AbstractResponse response instance
      * @throws ErrorException if there is an API error
      */
     public function execute() {
+        $Request = $this->createRequest();
+        try {
+            return $this->ResponseBuilder->__invoke($Request->send());
+        } catch (HttpClientErrorCodeException $Ex) {
+            throw ErrorException::initializeByString($Ex->getMessage());
+        }
+    }
+
+    /**
+     * Create HTTP request instance fr this API call
+     * @return HttpRequest HTTP request instance
+     */
+    private function createRequest() {
         $Request = new HttpRequest();
         $Request->setTransport(HttpRequest::TRANSPORT_CURL);
         $Request->setUrl(self::ENDPOINT_URI)
@@ -113,12 +127,7 @@ final class Request {
                 $Request->setPostData($this->parameters);
                 break;
         }
-
-        try {
-            return $this->ResponseBuilder->__invoke($Request->send());
-        } catch (HttpClientErrorCodeException $Ex) {
-            throw ErrorException::initializeByString($Ex->getMessage());
-        }
+        return $Request;
     }
 
     /**

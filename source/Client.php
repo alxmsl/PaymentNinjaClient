@@ -24,6 +24,7 @@ use alxmsl\PaymentNinja\Response\ProcessResponse;
 use alxmsl\PaymentNinja\Response\SuccessResponse;
 use alxmsl\PaymentNinja\Response\TokenResponse;
 use alxmsl\PaymentNinja\Response\UserResponse;
+use Closure;
 
 /**
  * Payment.Ninja REST API client
@@ -252,10 +253,11 @@ final class Client {
      * Create request instance
      * @param string $method API method name
      * @param array $parameters method call parameters
+     * @param Closure $ResponseBuilder function that building response instance
      * @return Request request instance for API call
      */
-    private function getRequest($method, $parameters, $responseBuilderClass) {
-        $Request = new Request($method, $parameters, $responseBuilderClass);
+    private function getRequest($method, $parameters, $ResponseBuilder) {
+        $Request = new Request($method, $ResponseBuilder, $parameters);
         $Request->sign($this->publicKey, $this->privateKey);
         return $Request;
     }
