@@ -56,6 +56,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
 "card": {
 "lastFour": "4242",
 "mask": "************4242",
+"type": "visa",
 "expirationMonth": "4",
 "expirationYear": "2020" }
 }');
@@ -71,6 +72,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
     card
         four:       4242
         mask:       ************4242
+        type:       visa
         exp. month: 4
         exp. year:  2020', (string) $Response);
     }
@@ -81,6 +83,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
 "card": {
 "lastFour": "4242",
 "mask": "************4242",
+"type": "visa",
 "expirationMonth": "4",
 "expirationYear": "2020" },
 "acs": {
@@ -116,6 +119,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
     card
         four:       4242
         mask:       ************4242
+        type:       visa
         exp. month: 4
         exp. year:  2020
     acs
@@ -134,6 +138,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
 "id": 1326123574311498453, "success": true,
 "card": {
 "lastFour": "4242",
+"type": "visa",
 "mask": "************4242",
 "expirationMonth": "4",
 "expirationYear": "2020" } }');
@@ -149,6 +154,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
     card
         four:       4242
         mask:       ************4242
+        type:       visa
         exp. month: 4
         exp. year:  2020', (string) $Response);
     }
@@ -159,6 +165,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
 "card": {
 "lastFour": "4242",
 "mask": "************4242",
+"type": "visa",
 "expirationMonth": "4",
 "expirationYear": "2020" },
 "permanentToken": "9a083895d07ca58f6e5505bd19ed35ca9a083895d07ca58f6e5505bd19ed35ca",
@@ -183,6 +190,7 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
     card
         four:       4242
         mask:       ************4242
+        type:       visa
         exp. month: 4
         exp. year:  2020
     recurring

@@ -124,6 +124,7 @@ process result
     card
         four:       %s
         mask:       %s
+        type:       %s
         exp. month: %s
         exp. year:  %s
     acs
@@ -142,6 +143,7 @@ EOD;
             , $this->getPermanentToken()
             , $this->getCard()->getLastFour()
             , $this->getCard()->getMask()
+            , $this->getCard()->getType()
             , $this->getCard()->getExpirationMonth()
             , $this->getCard()->getExpirationYear()
             , $this->getAccessControlServer()->getUrl()

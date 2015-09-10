@@ -111,6 +111,7 @@ authenticate result
     card
         four:       %s
         mask:       %s
+        type:       %s
         exp. month: %s
         exp. year:  %s
     recurring
@@ -123,6 +124,7 @@ EOD;
             , $this->getPermanentToken()
             , $this->getCard()->getLastFour()
             , $this->getCard()->getMask()
+            , $this->getCard()->getType()
             , $this->getCard()->getExpirationMonth()
             , $this->getCard()->getExpirationYear()
             , $this->getRecurring()->getFrequency()

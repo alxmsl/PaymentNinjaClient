@@ -1,5 +1,24 @@
 # PaymentNinjaClient
 
+Powerful client for [Telegram Bot API](https://core.telegram.org/bots)
+
+## Tests
+
+For completely tests running just call `phpunit` command
+
+```
+    PHPUnit 4.7.7 by Sebastian Bergmann and contributors.
+
+    Runtime:	PHP 5.5.23 with Xdebug 2.3.2
+    Configuration:	/Users/alxmsl/sources/PaymentNinjaClient.github/phpunit.xml.dist
+
+    .................
+
+    Time: 233 ms, Memory: 6.50Mb
+
+    OK (17 tests, 90 assertions)
+```
+
 ## License
 
 Copyright 2015 Alexey Maslov <alexey.y.maslov@gmail.com>

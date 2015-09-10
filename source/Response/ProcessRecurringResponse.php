@@ -84,6 +84,7 @@ process recurring result
     card
         four:       %s
         mask:       %s
+        type:       %s
         exp. month: %s
         exp. year:  %s
 EOD;
@@ -92,6 +93,7 @@ EOD;
             , $this->isSuccess() ? 'true' : 'false'
             , $this->getCard()->getLastFour()
             , $this->getCard()->getMask()
+            , $this->getCard()->getType()
             , $this->getCard()->getExpirationMonth()
             , $this->getCard()->getExpirationYear());
     }

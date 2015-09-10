@@ -46,6 +46,11 @@ final class CardResponse implements ObjectInitializedInterface {
     private $expirationYear = 0;
 
     /**
+     * @var string card type
+     */
+    private $type = '';
+
+    /**
      * @return int last four digits of credit card number
      */
     public function getLastFour() {
@@ -74,6 +79,13 @@ final class CardResponse implements ObjectInitializedInterface {
     }
 
     /**
+     * @return string card's type
+     */
+    public function getType() {
+        return $this->type;
+    }
+
+    /**
      * @inheritdoc
      * @return CardResponse instance with safely card data
      */
@@ -83,6 +95,7 @@ final class CardResponse implements ObjectInitializedInterface {
         $Result->mask            = (string) $Object->mask;
         $Result->expirationMonth = (int) $Object->expirationMonth;
         $Result->expirationYear  = (int) $Object->expirationYear;
+        $Result->type            = (string) $Object->type;
         return $Result;
     }
 }

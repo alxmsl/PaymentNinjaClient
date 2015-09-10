@@ -84,6 +84,7 @@ token's data
     card
         four:       %s
         mask:       %s
+        type:       %s
         exp. month: %s
         exp. year:  %s
 EOD;
@@ -92,6 +93,7 @@ EOD;
             , date('Y-m-d H:i:s', $this->getExpiresAt())
             , $this->getCard()->getLastFour()
             , $this->getCard()->getMask()
+            , $this->getCard()->getType()
             , $this->getCard()->getExpirationMonth()
             , $this->getCard()->getExpirationYear());
     }
