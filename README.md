@@ -28,6 +28,94 @@ Powerful client for [Payment.Ninja REST API](https://payment.ninja/#about)
 1. Merchant receives asynchronous callback with transaction details and can provide a￼service to a user if status is
     completed
 
+## Installation
+
+For simplified usage all what you need is require packet via composer
+
+```
+    $ composer require alxmsl/paymentninjaclient
+```
+
+In third-party projects, require packet in your `composer.json`
+
+```
+    "alxmsl/paymentninjaclient": "*"
+```
+
+...and update composer: `composer update`
+
+## Usages
+
+Firstly, create client instance with public and private key, that was provided in your account
+
+```
+    use alxmsl\PaymentNinja\Client;
+    $Client = new Client('<public key>', '<private key>');
+```
+
+Now you can create request for REST API methods
+
+- `user/resolve` via `Client::userResolve()`
+- `user/changeRecurring` via `Client::userChangeRecurring()`
+- `user/cancelRecurring` via `Client::userCancelRecurring()`
+- `card/getToken` via `Client::cardGetToken()`
+- `card/process` via `Client::cardProcess()`
+- `card/authenticate` via `Client::cardAuthenticate()`
+- `card/processRecurring` via `Client::cardProcessRecurring()`
+
+For request execution you should call `Request::execute()` method. For example below code
+
+```
+    use alxmsl\PaymentNinja\Client;
+    $Client = new Client('pU811cKE4', 'Pr1v4tEKEy');
+    $R = $Client->userResolve('aaa@aaa.ru', 'aaa@aaa.ru', '127.0.0.1')->execute();
+    var_dump($R);
+```
+
+...going to follow output
+
+```
+    class alxmsl\PaymentNinja\Response\UserResponse#8 (1) {
+      private $id =>
+      string(5) "46919"
+    }
+```
+
+## Console usage
+
+Surely, you can use simple CLI utilities for calling REST API methods
+
+- `user/resolve` via `./bin/user/resolve`
+- `user/changeRecurring` via `./bin/user/changeRecurring`
+- `user/cancelRecurring` via `./bin/user/cancelRecurring`
+- `card/getToken` via `./bin/card/getToken`
+- `card/process` via `./bin/card/process`
+- `card/authenticate` via `./bin/card/authenticate`
+- `card/processRecurring` via `./bin/card/processRecurring`
+
+So, user resolving example must be present as
+
+```
+    $ php ./bin/user/resolve.php -b='pU811cKE4' -r='Pr1v4tEKEy' -e='aaa@aaa.ru' -u='aaa@aaa.ru' -i='127.0.0.1'
+    user's data
+        id: 46919
+```
+
+Each utility supports their quick help page
+
+```
+$ php bin/card/getToken.php  --help
+Using: /usr/local/bin/php bin/card/getToken.php [-h|--help] [-c|--callback] -m|--month -n|--number -r|--private -b|--public -s|--security -y|--year
+-h, --help  - show help
+-c, --callback  - callback JSONP function name
+-m, --month  - expiration month
+-n, --number  - card number
+-r, --private  - project private key
+-b, --public  - project public key
+-s, --security  - card security code
+-y, --year  - expiration year
+```
+
 ## Tests
 
 For completely tests running just call `phpunit` command
