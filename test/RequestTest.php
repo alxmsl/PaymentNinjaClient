@@ -98,7 +98,7 @@ final class RequestTest extends PHPUnit_Framework_TestCase {
         $CreateRequestMethod = $Class->getMethod('createRequest');
         $CreateRequestMethod->setAccessible(true);
 
-        $Request = new Request('some/method', function() {}, [
+        $Request = new Request('user/resolve', function() {}, [
             'param1' => 'value1',
             'param2' => 'value2',
         ]);
@@ -107,14 +107,14 @@ final class RequestTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf(HttpRequest::class, $HttpRequest);
         $this->assertEquals(HttpRequest::METHOD_POST, $HttpRequest->getMethod());
         $this->assertEquals([
-            'some/method' => '',
+            'user/resolve' => '',
         ], $HttpRequest->getUrlData());
         $this->assertEquals([
             'param1' => 'value1',
             'param2' => 'value2',
         ], $HttpRequest->getPostData());
 
-        $Request = new Request('user/invoke', function() {});
+        $Request = new Request('user/resolve', function() {});
         $HttpRequest = $CreateRequestMethod->invoke($Request);
         $this->assertEquals(HttpRequest::METHOD_POST, $HttpRequest->getMethod());
 

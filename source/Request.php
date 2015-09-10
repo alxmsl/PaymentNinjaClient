@@ -53,7 +53,13 @@ final class Request {
      * @var array map that store relations between API and HTTP methods for requests
      */
     private static $methodMap = [
-        'card/getToken' => HttpRequest::METHOD_GET,
+        'user/resolve'          => HttpRequest::METHOD_POST,
+        'user/changeRecurring'  => HttpRequest::METHOD_POST,
+        'user/cancelRecurring'  => HttpRequest::METHOD_POST,
+        'card/getToken'         => HttpRequest::METHOD_GET,
+        'card/process'          => HttpRequest::METHOD_POST,
+        'card/authenticate'     => HttpRequest::METHOD_POST,
+        'card/processRecurring' => HttpRequest::METHOD_POST,
     ];
 
     /**
@@ -104,30 +110,32 @@ final class Request {
      * @return HttpRequest HTTP request instance
      */
     private function createRequest() {
-        $Request = new HttpRequest();
-        $Request->setTransport(HttpRequest::TRANSPORT_CURL);
-        $Request->setUrl(self::ENDPOINT_URI)
+        $HttpRequest = new HttpRequest();
+        $HttpRequest->setTransport(HttpRequest::TRANSPORT_CURL);
+        $HttpRequest->setUrl(self::ENDPOINT_URI)
             ->setConnectTimeout(1)
             ->setTimeout(3)
-            ->addUrlField($this->method);
+            ->addUrlField($this->method)
+            ->setMethod(self::$methodMap[$this->method]);
+        $this->appendParameters($HttpRequest);
+        return $HttpRequest;
+    }
 
-        // Uses HTTP method from the map for known API functions. By default uses POST
-        $httpMethod = array_key_exists($this->method, self::$methodMap)
-            ? self::$methodMap[$this->method]
-            : HttpRequest::METHOD_POST;
-        $Request->setMethod($httpMethod);
-
-        switch ($Request->getMethod()) {
+    /**
+     * Append parameters to HTTP request
+     * @param HttpRequest $HttpRequest HTTP request instance
+     */
+    private function appendParameters(HttpRequest $HttpRequest) {
+        switch ($HttpRequest->getMethod()) {
             case HttpRequest::METHOD_GET:
                 foreach ($this->parameters as $field => $value) {
-                    $Request->addGetField($field, $value);
+                    $HttpRequest->addGetField($field, $value);
                 }
                 break;
             case HttpRequest::METHOD_POST:
-                $Request->setPostData($this->parameters);
+                $HttpRequest->setPostData($this->parameters);
                 break;
         }
-        return $Request;
     }
 
     /**
