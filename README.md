@@ -19,11 +19,11 @@ Powerful client for [Payment.Ninja REST API](https://payment.ninja/#about)
 1. Merchant submits credit card token to a server with other payment data
 1. Merchant calls method [card/process](/bin/card/process.php) with credit card token
 1. If `success` is `true` and ACS object is returned
-1.1. Merchant POSTs ACS parameters `PaReq`, `MD`, `TermUrl` to aACS url in a browser
-1.1. User inputs and submits his 3DSecure password
-1.1. ACS POSTs parameters `PaRes`, `MD` back to merchant's ACS return url
-1.1. Merchant calls method [card/authenticate](/bin/card/authenticate.php) passing `PaRes` and `MD` parameters
-1.1. If `success` is `true` then merchant can provide a service to a user
+    1. Merchant POSTs ACS parameters `PaReq`, `MD`, `TermUrl` to aACS url in a browser
+    1. User inputs and submits his 3DSecure password
+    1. ACS POSTs parameters `PaRes`, `MD` back to merchant's ACS return url
+    1. Merchant calls method [card/authenticate](/bin/card/authenticate.php) passing `PaRes` and `MD` parameters
+    1. If `success` is `true` then merchant can provide a service to a user
 1. If success is `true` and ACS object is not returned, then merchant can show a success page to user
 1. If `remember` was passed, merchant will receive a `permanentToken` parameter with
     [card/process](/bin/card/process.php) or [card/authenticate](/bin/card/authenticate.php) method responses. You can
