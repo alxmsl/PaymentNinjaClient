@@ -26,6 +26,7 @@ use alxmsl\Cli\Option;
 use alxmsl\PaymentNinja\Client;
 
 $attributes        = [];
+$cardToken         = '';
 $currency          = '';
 $description       = '';
 $ip                = '';
@@ -94,6 +95,11 @@ processing, instead of temporary token', Option::TYPE_BOOLEAN)
     , function($name, $value) use (&$remember) {
         $remember = (bool) $value;
     });
+$Command->appendParameter(new Option('token', 't', 'credit card token (temporary or permanent)', Option::TYPE_STRING
+        , true)
+    , function($name, $value) use (&$cardToken) {
+        $cardToken = (string) $value;
+    });
 $Command->appendParameter(new Option('trial', 'f', 'Recurring trial period in days (first recurring payment will occur
 after trial). Recurring trial will work only if recurring interval is set'
         , Option::TYPE_STRING)
@@ -119,8 +125,8 @@ try {
     $Command->parse(true);
 
     $Client   = new Client($publicKey, $privateKey);
-    $Response = $Client->cardProcess($user, $orderId, $price, $currency, $description, $ip, $url, $remember, $verifyCard
-        , $recurring, $recurringInterval, $recurringTrial, $attributes)
+    $Response = $Client->cardProcess($user, $cardToken, $orderId, $price, $currency, $description, $ip, $url, $remember
+        , $verifyCard, $recurring, $recurringInterval, $recurringTrial, $attributes)
         ->execute();
     printf("%s\n", $Response);
 } catch (RequiredOptionException $Ex) {
