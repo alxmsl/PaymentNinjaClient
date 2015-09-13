@@ -25,8 +25,6 @@ use alxmsl\Cli\Exception\RequiredOptionException;
 use alxmsl\Cli\Option;
 use alxmsl\PaymentNinja\Client;
 
-$publicKey       = '';
-$privateKey      = '';
 $expirationMonth = 0;
 $expirationYear  = 0;
 $number          = '';
@@ -47,10 +45,6 @@ $Command->appendParameter(new Option('number', 'n', 'card number', Option::TYPE_
     , function($name, $value) use (&$number) {
         $number = (string) $value;
     });
-$Command->appendParameter(new Option('private', 'r', 'project private key', Option::TYPE_STRING, true)
-    , function($name, $value) use (&$privateKey) {
-        $privateKey = (string) $value;
-    });
 $Command->appendParameter(new Option('public', 'b', 'project public key', Option::TYPE_STRING, true)
     , function($name, $value) use (&$publicKey) {
         $publicKey = (string) $value;
@@ -67,7 +61,7 @@ $Command->appendParameter(new Option('year', 'y', 'expiration year', Option::TYP
 try {
     $Command->parse(true);
 
-    $Client   = new Client($publicKey, $privateKey);
+    $Client   = new Client($publicKey);
     $Response = $Client->cardGetToken($number, $expirationMonth, $expirationYear, $securityCode, $callback)->execute();
     printf("%s\n", $Response);
 } catch (RequiredOptionException $Ex) {

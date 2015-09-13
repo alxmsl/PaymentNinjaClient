@@ -45,7 +45,7 @@ final class Client {
      * @param string $publicKey public application key
      * @param string $privateKey private application key
      */
-    public function __construct($publicKey, $privateKey) {
+    public function __construct($publicKey, $privateKey = '') {
         $this->publicKey  = (string) $publicKey;
         $this->privateKey = (string) $privateKey;
     }

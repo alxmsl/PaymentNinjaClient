@@ -102,14 +102,21 @@ final class ProcessResponse extends AbstractResponse implements InitializationIn
      * @return ProcessResponse instance, that describes payment process result
      */
     public static function initializeByString($string) {
+        var_dump($string);
         $Response                    = json_decode($string);
         $Result                      = new ProcessResponse();
         $Result->id                  = (string) $Response->id;
         $Result->success             = (bool) $Response->success;
         $Result->Card                = CardResponse::initializeByObject($Response->card);
-        $Result->AccessControlServer = AccessControlServerResponse::initializeByObject($Response->acs);
-        $Result->permanentToken      = (string) $Response->permanentToken;
-        $Result->Recurring           = RecurringResponse::initializeByObject($Response->recurring);
+        if (isset($Response->permanentToken)) {
+            $Result->permanentToken = (string) $Response->permanentToken;
+        }
+        if (isset($Response->recurring)) {
+            $Result->Recurring = RecurringResponse::initializeByObject($Response->recurring);
+        }
+        if (isset($Response->acs)) {
+            $Result->AccessControlServer = AccessControlServerResponse::initializeByObject($Response->acs);
+        }
         return $Result;
     }
 
@@ -129,14 +136,9 @@ process result
         exp. month: %s
         exp. year:  %s
     acs
-        url:        %s
-        parameters
-            MD:     %s
-            PaReq:  %s
-            Terms:  %s
+        %s
     recurring
-        frequency:  %s
-        endsAt:     %s
+        %s
 EOD;
         return sprintf($format
             , $this->getId()
@@ -147,11 +149,7 @@ EOD;
             , $this->getCard()->getType()
             , $this->getCard()->getExpirationMonth()
             , $this->getCard()->getExpirationYear()
-            , $this->getAccessControlServer()->getUrl()
-            , $this->getAccessControlServer()->getParameters()->getMerchantData()
-            , $this->getAccessControlServer()->getParameters()->getPaymentAuthorizationRequest()
-            , $this->getAccessControlServer()->getParameters()->getTermsUrl()
-            , $this->getRecurring()->getFrequency()
-            , gmdate(DateTime::ISO8601, $this->getRecurring()->getEndsAt()));
+            , (string) $this->getAccessControlServer()
+            , (string) $this->getRecurring());
     }
 }

@@ -60,4 +60,22 @@ final class AccessControlServerResponse implements ObjectInitializedInterface {
         $Result->parameters = AccessControlServerParametersResponse::initializeByObject($Object->parameters);
         return $Result;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $format = <<<'EOD'
+        url:        %s
+        parameters
+            MD:     %s
+            PaReq:  %s
+            Terms:  %s
+EOD;
+        return sprintf($format
+            , $this->getUrl()
+            , $this->getParameters()->getMerchantData()
+            , $this->getParameters()->getPaymentAuthorizationRequest()
+            , $this->getParameters()->getTermsUrl());
+    }
 }

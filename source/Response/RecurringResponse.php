@@ -18,6 +18,7 @@
 namespace alxmsl\PaymentNinja\Response;
 
 use alxmsl\PaymentNinja\ObjectInitializedInterface;
+use DateTime;
 use stdClass;
 
 /**
@@ -49,10 +50,27 @@ final class RecurringResponse implements ObjectInitializedInterface {
         return $this->endsAt;
     }
 
+    /**
+     * @inheritdoc
+     * @return RecurringResponse transaction recurrent data instance
+     */
     public static function initializeByObject(stdClass $Object) {
         $Result            = new RecurringResponse();
         $Result->frequency = (int) $Object->frequency;
         $Result->endsAt    = strtotime($Object->endsAt);
         return $Result;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $format = <<<'EOD'
+        frequency:  %s
+        endsAt:     %s
+EOD;
+        return sprintf($format
+            , $this->getFrequency()
+            , gmdate(DateTime::ISO8601, $this->getEndsAt()));
     }
 }
