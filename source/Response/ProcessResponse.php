@@ -102,7 +102,6 @@ final class ProcessResponse extends AbstractResponse implements InitializationIn
      * @return ProcessResponse instance, that describes payment process result
      */
     public static function initializeByString($string) {
-        echo $string;
         $Response                    = json_decode($string);
         $Result                      = new ProcessResponse();
         $Result->id                  = (string) $Response->id;

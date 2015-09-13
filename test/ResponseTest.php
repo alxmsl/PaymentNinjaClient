@@ -123,11 +123,12 @@ final class ResponseTest extends PHPUnit_Framework_TestCase {
         exp. month: 4
         exp. year:  2020
     acs
-        url:        https://example.com/ACS
+        url:       https://example.com/ACS
         parameters
-            MD:     eyJ0cmFuc2Fj...
-            PaReq:  eJxdUWF...
-            Terms:  http://example.com/return
+            MD:    eyJ0cmFuc2Fj...
+            PaReq: eJxdUWF...
+            Terms: http://example.com/return
+        query:     MD=eyJ0cmFuc2Fj...&PaReq=eJxdUWF...&TermUrl=http%3A%2F%2Fexample.com%2Freturn
     recurring
         frequency:  1
         endsAt:     2015-10-22T08:49:23+0000', (string) $Response);
