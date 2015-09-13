@@ -41,6 +41,11 @@ final class AccessControlServerParametersResponse implements ObjectInitializedIn
     private $termsUrl = '';
 
     /**
+     * @var string ACS parameters query
+     */
+    private $query = '';
+
+    /**
      * @return string merchant data
      */
     public function getMerchantData() {
@@ -62,6 +67,13 @@ final class AccessControlServerParametersResponse implements ObjectInitializedIn
     }
 
     /**
+     * @return string ACS parameters query
+     */
+    public function getQuery() {
+        return $this->query;
+    }
+
+    /**
      * @inheritdoc
      * @return $this initialized object
      */
@@ -69,6 +81,7 @@ final class AccessControlServerParametersResponse implements ObjectInitializedIn
         $Response = new AccessControlServerParametersResponse();
         $Response->merchantData                = (string) $Object->MD;
         $Response->paymentAuthorizationRequest = (string) $Object->PaReq;
+        $Response->query                       = http_build_query($Object);
         $Response->termsUrl                    = (string) $Object->TermUrl;
         return $Response;
     }

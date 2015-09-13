@@ -114,7 +114,7 @@ final class Request {
         $HttpRequest->setTransport(HttpRequest::TRANSPORT_CURL);
         $HttpRequest->setUrl(self::ENDPOINT_URI)
             ->setConnectTimeout(1)
-            ->setTimeout(3)
+            ->setTimeout(10)
             ->addUrlField($this->method)
             ->setMethod(self::$methodMap[$this->method]);
         $this->appendParameters($HttpRequest);

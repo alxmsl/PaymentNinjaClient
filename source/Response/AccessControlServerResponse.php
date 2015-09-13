@@ -66,16 +66,18 @@ final class AccessControlServerResponse implements ObjectInitializedInterface {
      */
     public function __toString() {
         $format = <<<'EOD'
-        url:        %s
+        url:       %s
         parameters
-            MD:     %s
-            PaReq:  %s
-            Terms:  %s
+            MD:    %s
+            PaReq: %s
+            Terms: %s
+        query:     %s
 EOD;
         return sprintf($format
             , $this->getUrl()
             , $this->getParameters()->getMerchantData()
             , $this->getParameters()->getPaymentAuthorizationRequest()
-            , $this->getParameters()->getTermsUrl());
+            , $this->getParameters()->getTermsUrl()
+            , $this->getParameters()->getQuery());
     }
 }

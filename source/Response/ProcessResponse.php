@@ -102,7 +102,7 @@ final class ProcessResponse extends AbstractResponse implements InitializationIn
      * @return ProcessResponse instance, that describes payment process result
      */
     public static function initializeByString($string) {
-        var_dump($string);
+        echo $string;
         $Response                    = json_decode($string);
         $Result                      = new ProcessResponse();
         $Result->id                  = (string) $Response->id;
@@ -136,9 +136,9 @@ process result
         exp. month: %s
         exp. year:  %s
     acs
-        %s
+%s
     recurring
-        %s
+%s
 EOD;
         return sprintf($format
             , $this->getId()
