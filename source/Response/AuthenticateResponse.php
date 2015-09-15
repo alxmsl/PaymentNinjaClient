@@ -90,11 +90,11 @@ final class AuthenticateResponse extends AbstractResponse implements Initializat
      * @return AuthenticateResponse instance, that describes card authentication data
      */
     public static function initializeByString($string) {
-        $Response               = json_decode($string);
-        $Result                 = new AuthenticateResponse();
-        $Result->id             = $Response->id;
-        $Result->success        = (bool) $Response->success;
-        $Result->Card           = CardResponse::initializeByObject($Response->card);
+        $Response        = json_decode($string);
+        $Result          = new AuthenticateResponse();
+        $Result->id      = $Response->id;
+        $Result->success = (bool) $Response->success;
+        $Result->Card    = CardResponse::initializeByObject($Response->card);
         if (isset($Response->permanentToken)) {
             $Result->permanentToken = (string) $Response->permanentToken;
         }
@@ -114,25 +114,15 @@ authenticate result
     success:        %s
     permanentToken: %s
     card
-        four:       %s
-        mask:       %s
-        type:       %s
-        exp. month: %s
-        exp. year:  %s
+%s
     recurring
-        frequency:  %s
-        endsAt:     %s
+%s
 EOD;
         return sprintf($format
             , $this->getId()
             , json_encode($this->isSuccess())
             , $this->getPermanentToken()
-            , $this->getCard()->getLastFour()
-            , $this->getCard()->getMask()
-            , $this->getCard()->getType()
-            , $this->getCard()->getExpirationMonth()
-            , $this->getCard()->getExpirationYear()
-            , $this->getRecurring()->getFrequency()
-            , gmdate(DateTime::ISO8601, $this->getRecurring()->getEndsAt()));
+            , (string) $this->getCard()
+            , (string) $this->getRecurring());
     }
 }

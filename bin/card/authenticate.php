@@ -27,14 +27,14 @@ use alxmsl\PaymentNinja\Client;
 
 $publicKey     = '';
 $privateKey    = '';
-$payerResponse = null;
-$merchantData  = null;
+$payerResponse = '';
+$merchantData  = '';
 
 $Command = new CommandPosix();
 $Command->appendHelpParameter('show help');
 $Command->appendParameter(new Option('data', 'd', 'ACS merchant data', Option::TYPE_STRING, true)
     , function($name, $value) use (&$merchantData) {
-        $merchantData = (int) $value;
+        $merchantData = (string) $value;
     });
 $Command->appendParameter(new Option('private', 'r', 'project private key', Option::TYPE_STRING, true)
     , function($name, $value) use (&$privateKey) {
@@ -44,9 +44,9 @@ $Command->appendParameter(new Option('public', 'b', 'project public key', Option
     , function($name, $value) use (&$publicKey) {
         $publicKey = (string) $value;
     });
-$Command->appendParameter(new Option('response', 'r', 'ACS payer response', Option::TYPE_STRING, true)
+$Command->appendParameter(new Option('response', 'e', 'ACS payer response', Option::TYPE_STRING, true)
     , function($name, $value) use (&$payerResponse) {
-        $payerResponse = (int) $value;
+        $payerResponse = (string) $value;
     });
 
 try {

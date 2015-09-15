@@ -98,4 +98,23 @@ final class CardResponse implements ObjectInitializedInterface {
         $Result->type            = (string) $Object->type;
         return $Result;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $format = <<<'EOD'
+        four:       %s
+        mask:       %s
+        type:       %s
+        exp. month: %s
+        exp. year:  %s
+EOD;
+        return sprintf($format
+            , $this->getLastFour()
+            , $this->getMask()
+            , $this->getType()
+            , $this->getExpirationMonth()
+            , $this->getExpirationYear());
+    }
 }

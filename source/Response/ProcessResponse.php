@@ -129,11 +129,7 @@ process result
     success:        %s
     permanentToken: %s
     card
-        four:       %s
-        mask:       %s
-        type:       %s
-        exp. month: %s
-        exp. year:  %s
+%s
     acs
 %s
     recurring
@@ -143,11 +139,7 @@ EOD;
             , $this->getId()
             , json_encode($this->isSuccess())
             , $this->getPermanentToken()
-            , $this->getCard()->getLastFour()
-            , $this->getCard()->getMask()
-            , $this->getCard()->getType()
-            , $this->getCard()->getExpirationMonth()
-            , $this->getCard()->getExpirationYear()
+            , (string) $this->getCard()
             , (string) $this->getAccessControlServer()
             , (string) $this->getRecurring());
     }

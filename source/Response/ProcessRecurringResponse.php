@@ -82,19 +82,11 @@ process recurring result
     id:             %s
     success:        %s
     card
-        four:       %s
-        mask:       %s
-        type:       %s
-        exp. month: %s
-        exp. year:  %s
+%s
 EOD;
         return sprintf($format
             , $this->getId()
             , json_encode($this->isSuccess())
-            , $this->getCard()->getLastFour()
-            , $this->getCard()->getMask()
-            , $this->getCard()->getType()
-            , $this->getCard()->getExpirationMonth()
-            , $this->getCard()->getExpirationYear());
+            , (string) $this->getCard());
     }
 }

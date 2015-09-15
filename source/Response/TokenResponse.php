@@ -83,19 +83,11 @@ token's data
     id:        %s
     expiresAt: %s
     card
-        four:       %s
-        mask:       %s
-        type:       %s
-        exp. month: %s
-        exp. year:  %s
+%s
 EOD;
         return sprintf($format
             , $this->getId()
             , gmdate(DateTime::ISO8601, $this->getExpiresAt())
-            , $this->getCard()->getLastFour()
-            , $this->getCard()->getMask()
-            , $this->getCard()->getType()
-            , $this->getCard()->getExpirationMonth()
-            , $this->getCard()->getExpirationYear());
+            , (string) $this->getCard());
     }
 }
