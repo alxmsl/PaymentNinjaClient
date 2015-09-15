@@ -95,8 +95,12 @@ final class AuthenticateResponse extends AbstractResponse implements Initializat
         $Result->id             = $Response->id;
         $Result->success        = (bool) $Response->success;
         $Result->Card           = CardResponse::initializeByObject($Response->card);
-        $Result->permanentToken = (string) $Response->permanentToken;
-        $Result->Recurring      = RecurringResponse::initializeByObject($Response->recurring);
+        if (isset($Response->permanentToken)) {
+            $Result->permanentToken = (string) $Response->permanentToken;
+        }
+        if (isset($Response->recurring)) {
+            $Result->Recurring = RecurringResponse::initializeByObject($Response->recurring);
+        }
         return $Result;
     }
 
