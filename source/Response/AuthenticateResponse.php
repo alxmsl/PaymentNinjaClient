@@ -18,7 +18,6 @@
 namespace alxmsl\PaymentNinja\Response;
 
 use alxmsl\PaymentNinja\InitializationInterface;
-use DateTime;
 
 /**
  * Class for card's authentication data

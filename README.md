@@ -114,13 +114,12 @@ So, user resolving example must be present as
 Each utility supports their quick help page
 
 ```
-$ php bin/card/getToken.php  --help
-Using: /usr/local/bin/php bin/card/getToken.php [-h|--help] [-c|--callback] -m|--month -n|--number -r|--private -b|--public -s|--security -y|--year
+$ php bin/card/getToken.php --help
+Using: /usr/local/bin/php bin/card/getToken.php [-h|--help] [-c|--callback] -m|--month -n|--number -b|--public -s|--security -y|--year
 -h, --help  - show help
 -c, --callback  - callback JSONP function name
 -m, --month  - expiration month
 -n, --number  - card number
--r, --private  - project private key
 -b, --public  - project public key
 -s, --security  - card security code
 -y, --year  - expiration year
