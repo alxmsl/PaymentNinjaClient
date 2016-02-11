@@ -152,4 +152,15 @@ final class RequestTest extends PHPUnit_Framework_TestCase {
             'param2' => 'value2',
         ], $HttpRequest->getGetData());
     }
+
+    public function testRequestTimout() {
+        $timeout = 60;
+        $Request = new Request('card/processRecurring', function() {}, [], $timeout);
+
+        $Class = new ReflectionClass(Request::class);
+        $PropertyParameters = $Class->getProperty('timeout');
+        $PropertyParameters->setAccessible(true);
+
+        $this->assertEquals($timeout, $PropertyParameters->getValue($Request));
+    }
 }

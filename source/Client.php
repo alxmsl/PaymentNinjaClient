@@ -42,6 +42,11 @@ final class Client {
     private $privateKey = '';
 
     /**
+     * @var int request timeout, seconds
+     */
+    private $timeout = 10;
+
+    /**
      * @param string $publicKey public application key
      * @param string $privateKey private application key
      */
@@ -259,8 +264,18 @@ final class Client {
      * @return Request request instance for API call
      */
     private function getRequest($method, $parameters, $ResponseBuilder) {
-        $Request = new Request($method, $ResponseBuilder, $parameters);
+        $Request = new Request($method, $ResponseBuilder, $parameters, $this->timeout);
         $Request->sign($this->publicKey, $this->privateKey);
         return $Request;
+    }
+
+    /**
+     * Set request timeout
+     * @param int $timeout seconds
+     * @return $this
+     */
+    public function setTimeout($timeout) {
+        $this->timeout = (int) $timeout;
+        return $this;
     }
 }
