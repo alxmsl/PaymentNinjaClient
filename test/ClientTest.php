@@ -338,6 +338,18 @@ final class ClientTest extends PHPUnit_Framework_TestCase {
         ], $this->getRequestParametersProperty($Request));
     }
 
+    public function testRequestTimeout() {
+        $timeout = 60;
+        $Client = new Client('pub_key', 'private_key');
+        $Client->setTimeout($timeout);
+
+        $Class = new ReflectionClass(Client::class);
+        $PropertyParameters = $Class->getProperty('timeout');
+        $PropertyParameters->setAccessible(true);
+
+        $this->assertEquals($timeout, $PropertyParameters->getValue($Client));
+    }
+
     /**
      * Get request parameters for request instance
      * @param Request $Request request instance

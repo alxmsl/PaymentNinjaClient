@@ -50,6 +50,11 @@ final class Request {
     private $ResponseBuilder = null;
 
     /**
+     * @var int request timeout, seconds
+     */
+    private $timeout = 0;
+
+    /**
      * @var array map that store relations between API and HTTP methods for requests
      */
     private static $methodMap = [
@@ -66,11 +71,13 @@ final class Request {
      * @param string $method API method name
      * @param Closure $ResponseBuilder
      * @param array $parameters method call parameters
+     * @param int $timeout request timeout, seconds
      */
-    public function __construct($method, Closure $ResponseBuilder, array $parameters = []) {
+    public function __construct($method, Closure $ResponseBuilder, array $parameters = [], $timeout = 10) {
         $this->method          = (string) $method;
         $this->parameters      = $parameters;
         $this->ResponseBuilder = $ResponseBuilder;
+        $this->timeout         = (int) $timeout;
     }
 
     /**
@@ -114,7 +121,7 @@ final class Request {
         $HttpRequest->setTransport(HttpRequest::TRANSPORT_CURL);
         $HttpRequest->setUrl(self::ENDPOINT_URI)
             ->setConnectTimeout(1)
-            ->setTimeout(10)
+            ->setTimeout($this->timeout)
             ->addUrlField($this->method)
             ->setMethod(self::$methodMap[$this->method]);
         $this->appendParameters($HttpRequest);
