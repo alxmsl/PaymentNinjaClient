@@ -26,9 +26,9 @@ use stdClass;
  */
 final class CardResponse implements ObjectInitializedInterface {
     /**
-     * @var int last four digits of credit card number
+     * @var string last four digits of credit card number
      */
-    private $lastFour = 0;
+    private $lastFour = '';
 
     /**
      * @var string credit card's number mask
@@ -51,7 +51,7 @@ final class CardResponse implements ObjectInitializedInterface {
     private $type = '';
 
     /**
-     * @return int last four digits of credit card number
+     * @return string last four digits of credit card number
      */
     public function getLastFour() {
         return $this->lastFour;
@@ -91,7 +91,7 @@ final class CardResponse implements ObjectInitializedInterface {
      */
     public static function initializeByObject(stdClass $Object) {
         $Result                  = new CardResponse();
-        $Result->lastFour        = (int) $Object->lastFour;
+        $Result->lastFour        = (string) $Object->lastFour;
         $Result->mask            = (string) $Object->mask;
         $Result->expirationMonth = (int) $Object->expirationMonth;
         $Result->expirationYear  = (int) $Object->expirationYear;
